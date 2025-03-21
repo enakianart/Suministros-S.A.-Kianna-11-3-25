@@ -54,9 +54,9 @@
                 <input type="text" name="Articulo" placeholder="Articulo" value="<?= $row['Articulo']?>"> </td>
                 <td> <label for="Costo">Costo:</label>
                  <input type="number" name="Costo" placeholder="Costo" value="<?= $row['Costo']?>"></td>
-                 <td> <select name="Estado">
-                    <option value="activo">Activo</option>
-                    <option value="inactivo">Inactivo</option>
+                 <td> <label for="Estado">Estado:</label> <select name="Estado">
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
                 </select> </td>
                 </tr>
 

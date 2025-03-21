@@ -1,4 +1,3 @@
-
 <?php 
     include("../conexion/ConexionSuministrosSA.php");
     $con=connection();
@@ -9,6 +8,12 @@
     $query=mysqli_query($con, $sql);
 
     $row=mysqli_fetch_array($query);
+
+    $sql_unidades = "SELECT * FROM UnidadMedida";
+    $query_unidades = mysqli_query($con, $sql_unidades);
+
+    $sql_categorias = "SELECT * FROM Categoria";
+    $query_categorias = mysqli_query($con, $sql_categorias);
 ?>
 
 <!DOCTYPE html>
@@ -19,31 +24,55 @@
     <title> Suministros S.A. Editar Productos</title>
 </head>
 
-<body  bgcolor="#fcb0a0" style="margin: 30px;">
+<body bgcolor="#fcb0a0" style="margin: 30px;">
 
-    <hr
-        size="5" color="white" width= "1350" align="center" >
-    <hr
-        size="10" color="white" width= "1350" align="center" >
-        <table border="0" width="1360" height="60" cellpadding="2" bgcolor="white">
-            <tr>
+    <hr size="5" color="white" width= "1350" align="center" >
+    <hr size="10" color="white" width= "1350" align="center" >
+    <table border="0" width="1360" height="60" cellpadding="2" bgcolor="white">
+        <tr>
+            <th rowspan="1"> <font size="100" face="Agency FB"> ~ Editar Tabla productos ~ <br> Suministros S.A. </font></th>
+            <th rowspan="1"> <img src="../Hiki feli normal tamanio grandote.png" height="225"/> </th>
+        </tr>
+    </table>
+    <hr size="5" color="white" width= "1350" align="center" >
+    <hr size="10" color="white" width= "1350" align="center" >
 
-                <th rowspan="1"> <font size="100" face="Agency FB"> ~ Editar Tabla productos ~ <br> Suministros S.A. </font></th>
+    <div style="display: flex; justify-content: center;">
+        <center>
+            <font size="5" face="Agency FB"><h1>Unidades de Medida:</h1></font>
+            <table border="7" bordercolor="white" bgcolor="#fbc7bc" cellpadding="4" width="500">
+                <tr>
+                    <th>IDunidadMedida</th>
+                    <th>UnidadMedida</th>
+                </tr>
+                <?php while ($row_unidad = mysqli_fetch_array($query_unidades)): ?>
+                    <tr>
+                        <td><?= $row_unidad['IDunidadMedida'] ?></td>
+                        <td><?= $row_unidad['UnidadMedida'] ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            </table>
+        </center>
 
-               
+        <center>
+            <font size="5" face="Agency FB"><h1>Categorías:</h1></font>
+            <table border="7" bordercolor="white" bgcolor="#fbc7bc" cellpadding="4" width="500">
+                <tr>
+                    <th>IDcategoria</th>
+                    <th>Categoria</th>
+                </tr>
+                <?php while ($row_categoria = mysqli_fetch_array($query_categorias)): ?>
+                    <tr>
+                        <td><?= $row_categoria['IDcategoria'] ?></td>
+                        <td><?= $row_categoria['Categoria'] ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            </table>
+        </center>
+    </div>
+    <br>
 
-                <th rowspan="1"> <img src="../Hiki feli normal tamanio grandote.png" height="225"/> </th>
-    
-            </tr>
-        </table>
-
-        <hr
-        size="5" color="white" width= "1350" align="center" >
-    <hr
-        size="10" color="white" width= "1350" align="center" >
-
-
-        <div class="productos-form">
+    <div class="productos-form">
         <form action="2Editar_Productos.php" method="POST">
         <font size="6" face="Agency FB">
         <table border="7" bordercolor="white" bgcolor="#fbc7bc" cellpadding="4" width="1000">

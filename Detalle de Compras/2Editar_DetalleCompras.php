@@ -3,16 +3,11 @@
 include("../conexion/ConexionSuministrosSA.php");
 $con = connection();
 
-$IDproducto = $_POST["IDproducto"];
-$Nombre = $_POST['Nombre'];
-$Descripcion = $_POST['Descripcion'];
-$CodigoBarras = $_POST['CodigoBarras'];
+$IDdetalleCompra = $_POST["IDdetalleCompra"];
+$Cantidad = $_POST['Cantidad'];
 $CostoUnitario = $_POST['CostoUnitario'];
-$PrecioUnitario = $_POST['PrecioUnitario'];
-$StockActual = $_POST['StockActual'];
-$StockMinimo = $_POST['StockMinimo'];
-$IDunidadMedida = $_POST['IDunidadMedida'];
-$IDcategoria = $_POST['IDcategoria'];
+$IDcompra = $_POST['IDcompra'];
+$IDproducto = $_POST['IDproducto'];
 
 // Obtener el nombre del artículo asociado al producto
 $sql_nombre_articulo = "SELECT Articulo FROM Articulos WHERE IDarticulo = (SELECT IDarticulo FROM Productos WHERE IDproducto = '$IDproducto')";
@@ -30,14 +25,14 @@ if ($row_nombre_articulo = mysqli_fetch_assoc($query_nombre_articulo)) {
 
         // Validar si el costo unitario coincide con el costo del artículo
         if ($CostoUnitario == $costo_correcto) {
-            // Actualizar el producto si el costo es correcto
-            $sql = "UPDATE productos SET Nombre='$Nombre', Descripcion='$Descripcion', CodigoBarras=$CodigoBarras, CostoUnitario=$CostoUnitario, PrecioUnitario=$PrecioUnitario, StockActual=$StockActual, StockMinimo=$StockMinimo, IDunidadMedida=$IDunidadMedida, IDcategoria=$IDcategoria WHERE IDproducto='$IDproducto'";
+            // Actualizar el detalle de compra si el costo es correcto
+            $sql = "UPDATE Detalle_Compras SET Cantidad=$Cantidad, CostoUnitario=$CostoUnitario, IDcompra=$IDcompra, IDproducto=$IDproducto WHERE IDdetalleCompra='$IDdetalleCompra'";
             $query = mysqli_query($con, $sql);
 
             if ($query) {
-                Header("Location: Productos.php");
+                Header("Location: DetalleCompras.php"); // Asegúrate de que esta página exista
             } else {
-                echo "Error al actualizar el producto: " . mysqli_error($con);
+                echo "Error al actualizar el detalle de compra: " . mysqli_error($con);
             }
         } else {
             echo "Error: El costo unitario ingresado (" . $CostoUnitario . ") no coincide con el costo correcto del artículo (" . $costo_correcto . ").";
