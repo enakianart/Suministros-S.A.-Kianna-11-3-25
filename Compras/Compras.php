@@ -177,5 +177,8 @@ $query_detalle_compras = mysqli_query($con, $sql_detalle_compras);
         </table>
     </font>
 </div>
+
+<button onclick="location.href='../Inicio Suministros SA.html'" style="padding: 15px 30px; font-size: 18px;"> Volver al inicio 📍 </button>
+
 </body>
 </html>

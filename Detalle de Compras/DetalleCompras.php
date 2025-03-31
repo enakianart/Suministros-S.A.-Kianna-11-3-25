@@ -57,11 +57,15 @@ $query_detalle_compras = mysqli_query($con, $sql_detalle_compras);
                         <tr>
                             <th>IDproducto</th>
                             <th>Nombre</th>
+                            <th>CostoUnitario</th>
+
                         </tr>
                         <?php while ($row_producto = mysqli_fetch_array($query_productos)): ?>
                             <tr>
-                                <td><?= $row_producto['IDproducto'] ?></td>
+                                <td><?= $row_producto['IDproducto'] ?></td> 
                                 <td><?= $row_producto['Nombre'] ?></td>
+                                <td><?= $row_producto['CostoUnitario'] ?></td>
+
                             </tr>
                         <?php endwhile; ?>
                     </table>
@@ -142,5 +146,8 @@ $query_detalle_compras = mysqli_query($con, $sql_detalle_compras);
         </table>
     </font>
 </div>
+
+<button onclick="location.href='../Inicio Suministros SA.html'" style="padding: 15px 30px; font-size: 18px;"> Volver al inicio 📍 </button>
+
 </body>
 </html>

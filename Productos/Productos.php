@@ -143,5 +143,8 @@ $query_categorias = mysqli_query($con, $sql_categorias);
             </table>
         </font>
     </div>
+
+    <button onclick="location.href='../Inicio Suministros SA.html'" style="padding: 15px 30px; font-size: 18px;"> Volver al inicio 📍 </button>
+
 </body>
 </html>

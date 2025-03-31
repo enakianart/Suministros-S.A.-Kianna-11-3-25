@@ -46,11 +46,15 @@
                         <tr>
                             <th>IDproducto</th>
                             <th>Nombre</th>
+                            <th>CostoUnitario</th>
+
                         </tr>
                         <?php while ($row_producto = mysqli_fetch_array($query_productos)): ?>
                             <tr>
-                                <td><?= $row_producto['IDproducto'] ?></td>
+                                <td><?= $row_producto['IDproducto'] ?></td> 
                                 <td><?= $row_producto['Nombre'] ?></td>
+                                <td><?= $row_producto['CostoUnitario'] ?></td>
+
                             </tr>
                         <?php endwhile; ?>
                     </table>

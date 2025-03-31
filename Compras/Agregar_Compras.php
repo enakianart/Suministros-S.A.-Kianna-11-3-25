@@ -6,7 +6,7 @@ function connection() {
     $password = "lore";
     $database = "SuministrosSA";
 
-    $connect = mysqli_connect($servername, $username, $password, $database); // Se agrega la base de datos a la conexion
+    $connect = mysqli_connect($servername, $username, $password, $database); 
 
     if (!$connect) {
         die("Connection failed: " . mysqli_connect_error());
@@ -31,6 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (strtotime($FechaEstimadaEntrega) < strtotime($FechaCompra)) {
         echo "<script>alert('Error: La fecha estimada de entrega debe ser igual o mayor a la fecha de compra.'); window.location.href='compras.php';</script>";
         exit;
+    }
+
+    // Validar que NumeroFactura sea único
+    $sql_check_serie = "SELECT NumeroFactura FROM Compras WHERE NumeroFactura = '$NumeroFactura'";
+    $result_serie = mysqli_query($con, $sql_check_serie);
+    if (mysqli_num_rows($result_serie) > 0) {
+        $errores[] = "Error: El número de Factura ya existe en otro registro.";
     }
 
     // Insertar la compra

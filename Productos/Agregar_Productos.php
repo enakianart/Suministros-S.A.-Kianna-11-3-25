@@ -12,29 +12,37 @@ $StockMinimo = $_POST['StockMinimo'];
 $IDunidadMedida = $_POST['IDunidadMedida'];
 $IDcategoria = $_POST['IDcategoria'];
 
-// Buscar el costo correcto del artículo
-$sql_articulo = "SELECT Costo FROM Articulos WHERE Articulo = '$Nombre'";
-$query_articulo = mysqli_query($con, $sql_articulo);
+// Verificar si el código de barras ya existe
+$sql_verificar_codigo = "SELECT CodigoBarras FROM Productos WHERE CodigoBarras = '$CodigoBarras'";
+$query_verificar_codigo = mysqli_query($con, $sql_verificar_codigo);
 
-if ($row_articulo = mysqli_fetch_assoc($query_articulo)) {
-    $costo_correcto = $row_articulo['Costo'];
+if (mysqli_num_rows($query_verificar_codigo) > 0) {
+    echo "Error: El código de barras '$CodigoBarras' ya existe en otro registro.";
+} else {
+    // Buscar el costo correcto del artículo
+    $sql_articulo = "SELECT Costo FROM Articulos WHERE Articulo = '$Nombre'";
+    $query_articulo = mysqli_query($con, $sql_articulo);
 
-    // Validar si el costo ingresado coincide con el costo correcto
-    if ($CostoUnitario == $costo_correcto) {
-        // Insertar el producto si el costo es correcto
-        $sql = "INSERT INTO Productos (Nombre, Descripcion, CodigoBarras, CostoUnitario, PrecioUnitario, StockActual, StockMinimo, IDunidadMedida, IDcategoria) VALUES ('$Nombre', '$Descripcion', $CodigoBarras, $CostoUnitario, $PrecioUnitario, $StockActual, $StockMinimo, $IDunidadMedida, $IDcategoria)";
+    if ($row_articulo = mysqli_fetch_assoc($query_articulo)) {
+        $costo_correcto = $row_articulo['Costo'];
 
-        $query = mysqli_query($con, $sql);
+        // Validar si el costo ingresado coincide con el costo correcto
+        if ($CostoUnitario == $costo_correcto) {
+            // Insertar el producto si el costo es correcto
+            $sql = "INSERT INTO Productos (Nombre, Descripcion, CodigoBarras, CostoUnitario, PrecioUnitario, StockActual, StockMinimo, IDunidadMedida, IDcategoria) VALUES ('$Nombre', '$Descripcion', '$CodigoBarras', $CostoUnitario, $PrecioUnitario, $StockActual, $StockMinimo, $IDunidadMedida, $IDcategoria)";
 
-        if ($query) {
-            Header("Location: Productos.php");
+            $query = mysqli_query($con, $sql);
+
+            if ($query) {
+                Header("Location: Productos.php");
+            } else {
+                echo "Error al insertar el producto: " . mysqli_error($con);
+            }
         } else {
-            echo "Error al insertar el producto: " . mysqli_error($con);
+            echo "Error: El costo unitario ingresado (" . $CostoUnitario . ") no coincide con el costo correcto del artículo (" . $costo_correcto . ").";
         }
     } else {
-        echo "Error: El costo unitario ingresado (" . $CostoUnitario . ") no coincide con el costo correcto del artículo (" . $costo_correcto . ").";
+        echo "No se encontró el artículo: " . $Nombre;
     }
-} else {
-    echo "No se encontró el artículo: " . $Nombre;
 }
 ?>

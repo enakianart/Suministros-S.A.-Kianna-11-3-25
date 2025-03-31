@@ -45,11 +45,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Insertar detalle de compra si el costo es correcto
             $sql_insert_detalle = "INSERT INTO Detalle_Compras (Cantidad, CostoUnitario, IDcompra, IDproducto) VALUES ($Cantidad, $CostoUnitario, $IDcompra, $IDproducto)";
             if (mysqli_query($con, $sql_insert_detalle)) {
+                // Calcular el nuevo total de la compra
+                $sql_sum_subtotal = "SELECT SUM(Cantidad * CostoUnitario) AS TotalCompra FROM Detalle_Compras WHERE IDcompra = $IDcompra";
+                $result_sum_subtotal = mysqli_query($con, $sql_sum_subtotal);
+                $row_sum_subtotal = mysqli_fetch_assoc($result_sum_subtotal);
+                $total_compra = $row_sum_subtotal['TotalCompra'];
+
                 // Actualizar CostoTotal en Compras
-                $total_detalle = $Cantidad * $CostoUnitario;
-                $sql_update_total = "UPDATE Compras SET CostoTotal = CostoTotal + $total_detalle WHERE IDcompra = $IDcompra";
-                mysqli_query($con, $sql_update_total);
-                echo "<script>alert('Detalle de compra agregado correctamente.'); window.location.href='DetalleCompras.php';</script>";
+                $sql_update_total = "UPDATE Compras SET CostoTotal = $total_compra WHERE IDcompra = $IDcompra";
+                if (mysqli_query($con, $sql_update_total)) {
+                    echo "<script>alert('Detalle de compra agregado correctamente y total de compra actualizado.'); window.location.href='DetalleCompras.php';</script>";
+                } else {
+                    echo "<script>alert('Error al actualizar el total de la compra: " . mysqli_error($con) . "'); window.location.href='DetalleCompras.php';</script>";
+                }
             } else {
                 echo "<script>alert('Error al agregar detalle de compra: " . mysqli_error($con) . "'); window.location.href='DetalleCompras.php';</script>";
             }

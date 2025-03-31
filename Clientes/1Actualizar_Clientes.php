@@ -108,14 +108,14 @@
                 <td> <label for="DireccionFactura">Direccion de la Factura:</label>
                  <input type="text" name="DireccionFactura" placeholder="DireccionFactura" value="<?= $row['DireccionFactura']?>"> </td>
                 <td> <label for="DireccionEnvio">Direccion del Envio:</label>
-                 <input type="tetx" name="DireccionEnvio" placeholder="DireccionEnvio" value="<?= $row['DireccionEnvio']?>"> </td>
+                 <input type="text" name="DireccionEnvio" placeholder="DireccionEnvio" value="<?= $row['DireccionEnvio']?>"> </td>
                 </tr>
                 
                 <tr>
-                 <td> <label for="IDmetodoPago">IDmetodoPago:</label> <select name="IDmetodoPago">
+                 <td> <label for="IDmetodoPago">IDmetodoPago:</label> 
                  <input type="number" name="IDmetodoPago" placeholder="IDmetodoPago" value="<?= $row['IDmetodoPago']?>"> </td>
 
-                 <td> <label for="IDtipoCliente">IDtipoCliente:</label> <select name="IDtipoCliente">
+                 <td> <label for="IDtipoCliente">IDtipoCliente:</label> 
                  <input type="number" name="IDtipoCliente" placeholder="IDtipoCliente" value="<?= $row['IDtipoCliente']?>"> </td>
 
 
